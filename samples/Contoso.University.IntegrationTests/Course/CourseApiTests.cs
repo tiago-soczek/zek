@@ -8,6 +8,10 @@ namespace Contoso.University.IntegrationTests.Course
 {
     public class CourseApiTests : BaseTest
     {
+        public CourseApiTests(IntegrationTestFixture fixture) : base(fixture)
+        {
+        }
+
         [Fact]
         public async Task Register_EmptyPayload()
         {
