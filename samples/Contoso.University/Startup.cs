@@ -66,15 +66,7 @@ namespace Contoso.University
             // Auto Mapper
             services.AddAutoMapper(asm, zekApiAsm);
 
-            try
-            {
-
-                Mapper.AssertConfigurationIsValid();
-            }
-            catch (System.Exception e)
-            {
-                throw e;
-            }
+            Mapper.AssertConfigurationIsValid();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
