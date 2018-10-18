@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using System.Net.Http;
+﻿using System.Net.Http;
 using Xunit;
 
 namespace Contoso.University.IntegrationTests
@@ -15,10 +13,6 @@ namespace Contoso.University.IntegrationTests
         }
 
         protected HttpClient Client => fixture.Client;
-
-        protected IWebHost Host => fixture.Host;
-
-        protected IMediator Mediator => fixture.Mediator;
 
         protected TService GetService<TService>() => fixture.GetService<TService>();
     }
