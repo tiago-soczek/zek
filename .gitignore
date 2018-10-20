@@ -125,3 +125,6 @@ bower_components
 .sonarqube
 .validation
 /src/Kb.Tests/Properties/launchSettings.json
+
+# Dist
+dist/
