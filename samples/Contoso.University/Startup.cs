@@ -87,7 +87,7 @@ namespace Contoso.University
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server Manager v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso University");
             });
         }
     }
