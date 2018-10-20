@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Zek.Api;
 using Zek.Api.Filters;
 
@@ -67,6 +70,8 @@ namespace Contoso.University
             services.AddAutoMapper(asm, zekApiAsm);
 
             Mapper.AssertConfigurationIsValid();
+
+            services.AddHealthChecks();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -89,6 +94,8 @@ namespace Contoso.University
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server Manager v1");
             });
+
+            app.UseHealthChecks("/_/healthz");
         }
     }
 }
