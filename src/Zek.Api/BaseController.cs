@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Zek.Api.Dtos;
 using Zek.Model;
 
 namespace Zek.Api
