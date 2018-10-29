@@ -17,6 +17,8 @@ namespace Contoso.University.IntegrationTests.Course
         {
             var result = await Client.PostAsJsonAsync("/courses", new RegisterCourse());
 
+            var response = await result.Content.ReadAsStringAsync();
+
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         }
 

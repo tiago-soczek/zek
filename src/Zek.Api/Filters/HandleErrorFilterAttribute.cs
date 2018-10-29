@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Zek.Api.Dtos;
 using Zek.Model;
 
 namespace Zek.Api.Filters
@@ -25,19 +24,19 @@ namespace Zek.Api.Filters
 
             logger.LogError(exception, "Unhandled Exception");
 
-            var stackTrace = hostingEnvironment.IsDevelopment() ? exception.ToString() : null;
+            var stackTrace = hostingEnvironment.IsProduction() ? null : exception.ToString();
 
             var errorMessage = exception is ZekException ? exception.Message : "Internal Error";
 
-            var friendlyErrorMessage = new ErrorResultDto
+            var details = new ProblemDetails
             {
-                StackTrace = stackTrace,
-                Error = errorMessage
+                Title = errorMessage,
+                Detail = stackTrace
             };
 
-            context.Result = new ObjectResult(friendlyErrorMessage)
+            context.Result = new ObjectResult(details)
             {
-                StatusCode = (int?) HttpStatusCode.InternalServerError
+                StatusCode = (int?)HttpStatusCode.InternalServerError
             };
         }
     }

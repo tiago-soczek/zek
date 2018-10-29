@@ -22,5 +22,11 @@ namespace Contoso.University.Courses.Api
 
             return As<CourseDto>(result);
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Ok();
+        }
     }
 }

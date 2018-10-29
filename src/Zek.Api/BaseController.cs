@@ -52,9 +52,9 @@ namespace Zek.Api
 
         private ActionResult HandleFailure(IResult result)
         {
-            var errorResultDto = new ErrorResultDto
+            var errorResultDto = new ProblemDetails
             {
-                Error = result.Error
+                Title = result.Error
             };
 
             switch (result.Code)
