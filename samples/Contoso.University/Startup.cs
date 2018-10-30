@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,16 +42,16 @@ namespace Contoso.University
             services.AddMvc(options =>
             {
                 // Validation & Exception filters
-                options.Filters.Add(typeof(ValidatorActionFilter));
+                // options.Filters.Add(typeof(ValidatorActionFilter));
                 options.Filters.Add(typeof(HandleErrorFilterAttribute));
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddJsonOptions(x => x.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)
             .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(asm));
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.SuppressModelStateInvalidFilter = true;
+                options.ClientErrorMapping.Add(StatusCodes.Status500InternalServerError, new ClientErrorData { Title = "Internal Server Error" });
             });
 
             // Security
@@ -76,11 +77,7 @@ namespace Contoso.University
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
+            if (!env.IsDevelopment())
             {
                 app.UseHsts();
             }

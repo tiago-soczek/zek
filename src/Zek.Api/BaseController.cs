@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Zek.Api.Dtos;
 using Zek.Model;
 
 namespace Zek.Api
@@ -52,9 +51,9 @@ namespace Zek.Api
 
         private ActionResult HandleFailure(IResult result)
         {
-            var errorResultDto = new ErrorResultDto
+            var errorResultDto = new ProblemDetails
             {
-                Error = result.Error
+                Title = result.Error
             };
 
             switch (result.Code)
