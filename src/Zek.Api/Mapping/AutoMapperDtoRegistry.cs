@@ -14,6 +14,7 @@ namespace Zek.Api.Mapping
 
         private bool DtoMapping(Type source, Type destination)
         {
+            // Course > CourseDto
             return source.Name == destination.Name + "Dto" ||
                    source.Name + "Dto" == destination.Name;
         }

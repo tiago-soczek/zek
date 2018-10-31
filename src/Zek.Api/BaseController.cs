@@ -55,7 +55,7 @@ namespace Zek.Api
             {
                 Title = result.Error
             };
-
+            
             switch (result.Code)
             {
                 case ResultCode.NotFound:

@@ -24,9 +24,15 @@ namespace Contoso.University.Courses.Api
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public ActionResult<CourseDto[]> GetAll()
         {
-            return Ok();
+            var courses = new[]
+            {
+                new CourseDto { Id = 1, Title = "Test #1" },
+                new CourseDto { Id = 2, Title = "Test #2" }
+            };
+
+            return Ok(courses);
         }
     }
 }

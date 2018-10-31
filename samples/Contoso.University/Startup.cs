@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using Swashbuckle.AspNetCore.Swagger;
+using NSwag.AspNetCore;
 using System.Reflection;
 using Zek.Api;
 using Zek.Api.Filters;
+using NJsonSchema;
 
 namespace Contoso.University
 {
@@ -54,11 +55,7 @@ namespace Contoso.University
             // TODO: Configure keys
             services.AddDataProtection();
 
-            // Swagger
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "Contoso University", Version = "v1" });
-            });
+            services.AddSwagger();
 
             // Mediator
             services.AddMediatR(asm);
@@ -71,23 +68,25 @@ namespace Contoso.University
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
+            if (!env.IsDevelopment())
             {
                 app.UseHsts();
             }
 
+            app.UseCors(_ => {
+                _.AllowAnyHeader()
+                 .AllowAnyMethod()
+                 .AllowAnyOrigin()
+                 .AllowCredentials();
+            });
+
             app.UseHttpsRedirection();
             app.UseMvc();
 
-            // Swagger API Documentation
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUi3WithApiExplorer(settings =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso University");
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
             });
         }
     }
